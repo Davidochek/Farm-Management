@@ -1,0 +1,17 @@
+{
+    "name": "iGrowers Information Hub",
+    "short_name": "Growers",
+    "start_url": "/index.php",
+    "background_color": "#ffffff",
+    "description": "iGrowers Information Farmers Hub",
+    "display": "fullscreen",
+    "theme_color": "#DDE1E3",
+    "icons": [
+        {
+            "src": "igrowers.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
