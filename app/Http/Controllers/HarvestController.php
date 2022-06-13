@@ -70,6 +70,14 @@ class HarvestController extends Controller
         //
     }
 
+     public function updateharvest(Request $request, $id)
+    {
+        $id = $request['id'];
+        $harvest = Harvest::findOrFail($id);
+         $harvest->update($request->all());
+         return response()->json(['success'=>'Harvest is successfully updated']);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -88,8 +96,17 @@ class HarvestController extends Controller
      * @param  \App\Models\Harvest  $harvest
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Harvest $harvest)
+    public function destroy($id)
     {
-        //
+        $harvest = Harvest::find($id);
+        $harvest->delete();
+        return response()->json(['success'=>'Harvest is successfully deleted']);
+    }
+
+     public function deleteharvest($id)
+    {
+        $harvest = Harvest::find($id);
+        $harvest->delete();
+        return response()->json(['success'=>'Harvest is successfully deleted']);
     }
 }

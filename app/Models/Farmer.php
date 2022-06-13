@@ -9,8 +9,13 @@ class Farmer extends Model
 {
     use HasFactory;
 
-     protected $fillable = [ 'name', 'gender', 'age', 'education', 'phone', 'location', 'fperiod', 'farmsize', 'fwithhomestead', 'farmanimals', 'farmblocks', 'farmblocksno', 'farmcertifications', 'farmownership', 'farmanimalsno', 'farmtransport', 'fmaincrop', 'fothercrop'
+     protected $fillable = [ 'name', 'phone', 'location', 'farmsize', 'fwithhomestead', 'farmblocksno', 'farmownership', 'fmaincrop', 'idno', 'coordinator', 'gps',
+      'fieldname', 'crop', 'avocodvariety', 'nooftrees', 'certifiedtrees', 'dateplanted', 'beansvariety', 'quantityplanted', 'expectedvolume', 'expectedharvestdate',
     ];
+
+    public function harvests(){
+    	return $this->hasMany(Harvest::class);
+    }
 
     public function fields(){
     	return $this->hasMany(Field::class);

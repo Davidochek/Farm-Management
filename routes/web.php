@@ -138,9 +138,13 @@ Route::resource('/market', MarketController::class, [
 ]);
 Route::put('updatefarmer/{id}', [FarmerController::class, 'updatefarmer'])->name('updatefarmer');
 Route::get('previewcrop/{id}', [CropController::class, 'previewcrop'])->name('previewcrop');
+Route::get('previewfield/{id}', [FarmerController::class, 'previewfield'])->name('previewfield');
+Route::get('previewharvest/{id}', [FarmerController::class, 'previewharvest'])->name('previewharvest');
 Route::post('admins/pdfreport', [FarmerController::class, 'pdfreport'])->name('admins.pdfreport');
 Route::get('admins/print/{id}', [FarmerController::class, 'print'])->name('admins.print');
 Route::get('admins/print2/{id}', [FarmerController::class, 'print2'])->name('admins.print2');
+Route::delete('deleteharvest/{id}', [HarvestController::class, 'deleteharvest'])->name('deleteharvest');
+Route::post('updateharvest/{id}', [HarvestController::class, 'updateharvest'])->name('updateharvest');
 Route::resource('farmers', FarmerController::class);
 Route::resource('fields', FieldController::class);
 Route::resource('harvests', HarvestController::class);

@@ -47,7 +47,7 @@
                 <div class="app-page-title">
                     <div class="page-title-wrapper">
                         <div class="page-title-heading">
-                            <div>iGrowers Group Admins
+                            <div>iGrowers InfoHub Login
                             </div>
                         </div>
                         <div class="page-title-actions">
@@ -69,7 +69,7 @@
                                                 </span>
                                             </a>
                                         </li>
-                                        <li class="nav-item">
+                                       {{--  <li class="nav-item">
                                             <a href="{{ route('admins.register-farms') }}" class="nav-link">
                                                 <i class="nav-link-icon lnr-inbox"></i>
                                                 <span>
@@ -92,9 +92,9 @@
                                                     Crop Harvests
                                                 </span>
                                             </a>
-                                        </li>
+                                        </li> --}}
                                         <li class="nav-item">
-                                            <a href="{{ route('admins.services') }}" class="nav-link">
+                                            <a href="{{ route('admins.harvest-reports') }}" class="nav-link">
                                                 <i class="nav-link-icon lnr-file-empty"></i>
                                                 <span>
                                                     Reports
@@ -144,7 +144,7 @@
 <script type="text/javascript" src="{{ asset('./assets2/scripts/main.js') }}"></script>
 <script src="{{ asset('./assets3/js/dataTables/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('./assets3/js/dataTables/dataTables.bootstrap.js') }}"></script>
-<script>
+{{-- <script>
     $(document).ready(function() {
         $('#dataTables-example').dataTable();
         $('#cropstable1').dataTable();
@@ -159,7 +159,7 @@
         $('#cropstable3').dataTable();
         $('#cropstable4').dataTable();
     });
-</script>
+</script> --}}
 @stack('scripts')
 </body>
 </html>

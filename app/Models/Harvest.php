@@ -9,8 +9,12 @@ class Harvest extends Model
 {
     use HasFactory;
     protected  $fillable = [
-     'date', 'unit', 'crop_id', 'farmer_id', 'farmer_name', 'farmer_phone', 'quantity','totalquantity', 'avocadovariety', 'crates', 'price', 'amount', 
+     'date', 'unit', 'farmers_id', 'quantity','totalquantity', 'avocadovariety', 'crates', 'price', 'amount', 
     ];
+
+     public function farmers() {
+        return $this->belongsTo(Farmer::class);
+    }
 
      public function crops() {
         return $this->belongsTo(Crop::class);

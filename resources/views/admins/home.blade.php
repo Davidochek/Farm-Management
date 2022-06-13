@@ -29,7 +29,7 @@
 </div>   
 <div class="col-md-6 col-xl-4">
  <div class="main-card mb-3 card">
-    <div class="card-body"><h5 class="card-title">DELIVERY</h5>
+    <div class="card-body"><h5 class="card-title">SERVICE DELIVERY</h5>
       Member Service Delivery <br>
     <a href="{{ route('admins.farmers') }}" class="btn btn-success">Delivery</a>
   </div>
@@ -37,9 +37,10 @@
 </div>   
 <div class="col-md-6 col-xl-4">
  <div class="main-card mb-3 card">
-    <div class="card-body"><h5 class="card-title">SERVICES</h5>
+    <div class="card-body"><h5 class="card-title">SERVICES REPORT</h5>
     Services Reports <br>
-    <a href="{{ route('admins.services') }}" class="btn btn-success">View Services</a>
+    <a href="{{ route('admins.harvest-reports') }}" class="btn btn-success">View Services</a>
+    {{-- <a href="{{ route('admins.services') }}" class="btn btn-success">View Services</a> --}}
   </div>
   </div>
 </div>  

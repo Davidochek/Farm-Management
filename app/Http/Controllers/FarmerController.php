@@ -14,6 +14,7 @@ use PDF;
 use Barryvdh\Snappy;
 use PdfReport;
 use ExcelReport;
+use Validator;
 
 class FarmerController extends Controller
 {
@@ -52,18 +53,25 @@ class FarmerController extends Controller
     {
         $farmer = Farmer::with('fields')->find($id);
         $fields = Field::where('farmer_id', $id)->with('crops')->latest()->get();
-        $harvests = Harvest::where('farmer_id', $id)->with('crops')->latest()->get();
+        $harvests = Harvest::where('farmers_id', $id)->with('crops')->latest()->get();
         return view('admins.farmer-details', compact(['farmer', 'fields', 'harvests']));
 
     }
 
     public function print($id)
     {
-        $harvest = Harvest::findOrFail($id);
-        $pdf = PDF::loadView('admins.receipt', compact('harvest'));
+        $harvest = Harvest::with('farmers')->findOrFail($id);
+        $farmer = $harvest->farmers;
+        $pdf = PDF::loadView('admins.receipt', compact(['harvest', 'farmer']));
         return $pdf->stream('delivery.pdf');
     }
 
+    public function previewharvest($id)
+    {
+         $harvest = Harvest::with('farmers')->findOrFail($id);
+        return $harvest;
+
+    }
     public function print2($id)
     {
         $harvest = Harvest::with('fields')->findOrFail($id);
@@ -84,14 +92,18 @@ class FarmerController extends Controller
     $meta = [ // For displaying filters description on header
     'Registered on' => $fromDate . ' To ' . $toDate
 ];
-$harvests = Harvest::select('id', 'date', 'unit', 'crop_id', 'farmer_id', 'farmer_name', 'farmer_phone', 'quantity','totalquantity', 'avocadovariety', 'crates', 'price', 'amount')->whereBetween('created_at', [$fromDate, $toDate]);
+$harvests = DB::table('harvests')
+->select( 'harvests.date', 'harvests.unit', 'harvests.quantity','harvests.totalquantity', 'harvests.avocadovariety', 'harvests.crates', 'harvests.price', 'harvests.amount','farmers.name','farmers.phone','farmers.idno','farmers.crop','farmers.coordinator')
+->join('farmers','farmers.id','=','harvests.farmers_id')
+->whereBetween('harvests.created_at', [$fromDate, $toDate]);
 $columns = [
-    'Farmer ID' => 'id',
-    'Farmer Name' => 'farmer_name',
-    'Phone No.' => 'farmer_phone',
+    'Farmer Name' => 'name',
+    'Phone No.' => 'phone',
+    'Farmer ID' => 'idno',
+    'Farmer coordinator' => 'coordinator',
     'Date' => 'date',
     'Unit' => 'unit',
-    'Crop Planted' => 'id',
+    'Crop Planted' => 'crop',
     'Variety' => 'avocadovariety',
     'No. of Crates' => 'crates',
     'Weight(Kgs)' => 'totalquantity',
@@ -102,12 +114,7 @@ if ($type === "pdf") {
   return PdfReport::of($title, $meta, $harvests, $columns)
   ->editColumn('Phone No.', [
     'displayAs' => function($result) {
-        return ('254'.$result->farmer_phone);
-    }
-])
-  ->editColumn('Crop Planted', [
-    'displayAs' => function($result) {
-        return ('Avocado');
+        return ('254'.$result->phone);
     }
 ])
                     ->showTotal([ // Used to sum all value on specified column on the last table (except using groupBy method). 'point' is a type for displaying total with a thousand separator
@@ -123,14 +130,9 @@ if ($type === "pdf") {
                   return ExcelReport::of($title, $meta, $harvests, $columns)
                   ->editColumn('Phone No.', [
                     'displayAs' => function($result) {
-                        return ('254'.$result->farmer_phone);
+                        return ('254'.$result->phone);
                     },
                     'class' => 'left'
-                ])
-                  ->editColumn('Crop Planted', [
-                    'displayAs' => function($result) {
-                        return ('Avocado');
-                    }
                 ])
                     ->showTotal([ // Used to sum all value on specified column on the last table (except using groupBy method). 'point' is a type for displaying total with a thousand separator
                         'Weight(Kgs)' => 'point',
@@ -234,11 +236,27 @@ if ($type === "pdf") {
      */
     public function store(Request $request)
     {
-        // $farmer = $request->all();
-        // dd($farmer);
-     $farmer =  Farmer::create($request->all());
-     return redirect('admin/register-farmer')->with('success', 'Saved Successfully');
+       
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'location' => 'required',
+            'idno' => 'required',
+            'coordinator' => 'required',
+
+            ]);     
+         $farmer =  Farmer::create($request->all());
+        return redirect('admin/register-farmer')->with('success', 'Saved Successfully');
+       
+     
  }
+   public function previewfield($id)
+    {
+        $farmer = Farmer::find($id);
+        return $farmer;
+
+    }
+
 
     /**
      * Display the specified resource.

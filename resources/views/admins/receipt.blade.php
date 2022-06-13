@@ -305,13 +305,12 @@ footer .end {
 			</div>
 		</div>
 	</header>
-
 	<section>
 		<div class="container">
 			<div class="details clearfix">
 				<div class="client left">
-					<p class="name">{{$harvest->farmer_name}}</p>
-					<p>Phone: +254{{$harvest->farmer_phone}}</p>
+					<p class="name">Name: {{$farmer->name}}</p>
+					<p>Phone: +254 {{$farmer->phone}}</p>  
 				</div>
 				<div class="data right">
 					<div class="title">Delivery {{$harvest->id}}</div>
